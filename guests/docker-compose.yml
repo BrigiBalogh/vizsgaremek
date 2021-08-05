@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  guests-mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - '3308:3306'
+    environment:
+      MYSQL_DATABASE: guests
+      MYSQL_USER: guests
+      MYSQL_PASSWORD: guests
+      MYSQL_ROOT_PASSWORD: root
+     # MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
+  guests-app:
+    image: guests
+    restart: always
+    ports:
+      - '8081:8080'
+    depends_on:
+      - guests-mariadb
+    environment:
+      SERVER.PORT: 8080
+      SPRING_DATASOURCE_URL: 'jdbc:mariadb://guests-mariadb/guests'
+    entrypoint: ['./wait-for-it.sh', '-t', '120', 'guests-mariadb:3306', '--', 'java', 'org.springframework.boot.loader.JarLauncher']

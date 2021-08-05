@@ -11,5 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AddTimeBookerCommand {
 
-    private LocalDateTime newTimeBooker;
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
+
 }

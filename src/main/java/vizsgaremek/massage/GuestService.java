@@ -33,7 +33,7 @@ public class GuestService {
     public GuestDto addTimeBookerToGuest(long id, AddTimeBookerCommand command) {
         Guest guest = guestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));
-        TimeBooker timeBooker = new TimeBooker(command.getNewTimeBooker());
+        TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime());
 
         guest.addTimeBooker(timeBooker);
 
@@ -50,6 +50,7 @@ public class GuestService {
         return mapper.map(guest, GuestDto.class);
     }
 
+    @Transactional
     public GuestDto updateMedicalConditionById(long id, UpdateMedicalConditionCommand command) {
         Guest guest = guestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));

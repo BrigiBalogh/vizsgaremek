@@ -17,9 +17,6 @@ public class TimeBooker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "new_time_booker")
-    private LocalDateTime newTimeBooker;
-
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
@@ -31,44 +28,14 @@ public class TimeBooker {
     @ToString.Exclude
     private Guest guest;
 
+    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime, Guest guest) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.guest = guest;
+    }
 
-    public TimeBooker(LocalDateTime newTimeBooker) {
-        this.newTimeBooker = newTimeBooker;
+    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 }
-
-/*  @Data
-public class FutureInterval {
-
-    @Future(message = "Must be in the future")
-    private final LocalDateTime start;
-
-    @Future(message = "Must be in the future")
-    private final LocalDateTime end;
-
-
-
-      public class IntervalValidator implements ConstraintValidator<ValidInterval, FutureInterval> {
-    @Override
-    public boolean isValid(FutureInterval futureInterval, ConstraintValidatorContext constraintValidatorContext) {
-        return futureInterval.getStart().isBefore(futureInterval.getEnd());
-    }
-
-
-
-    @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-@Constraint(validatedBy = IntervalValidator.class)
-public @interface ValidInterval {
-
-    String message() default "Invalid interval";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
-
-
-
-
-       @ValidInterval
-    @Valid
-    private FutureInterval futureInterval;
-*/
