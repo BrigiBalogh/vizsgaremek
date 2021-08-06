@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/timeBookers")
+@RequestMapping("/api/time-bookers")
 @Tag(name = "Operations on timeBooker")
 public class TimeBookerController {
 

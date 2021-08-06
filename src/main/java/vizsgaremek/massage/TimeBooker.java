@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "timeBookers")
+@Table(name = "time_bookers")
 public class TimeBooker {
 
 
@@ -36,8 +36,7 @@ public class TimeBooker {
         this.guest = guest;
     }
 
-    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime) {
+    public TimeBooker(LocalDateTime startTime) {
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 }

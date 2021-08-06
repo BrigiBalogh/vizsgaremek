@@ -14,5 +14,6 @@ public class AddTimeBookerCommand {
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+    private Guest guest;
 
 }

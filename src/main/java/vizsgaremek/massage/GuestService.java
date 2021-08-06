@@ -33,7 +33,7 @@ public class GuestService {
     public GuestDto addTimeBookerToGuest(long id, AddTimeBookerCommand command) {
         Guest guest = guestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));
-        TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime());
+        TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),command.getGuest());
 
         guest.addTimeBooker(timeBooker);
 
