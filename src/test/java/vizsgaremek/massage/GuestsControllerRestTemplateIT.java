@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,10 +52,15 @@ public class GuestsControllerRestTemplateIT {
 
     @Test
     void testCreateGuest() {
+        GuestDto result =
         template.postForObject("/api/guests",
                 new CreateGuestCommand(
                         "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                 GuestDto.class);
+
+        assertEquals("Frau Markgraf",result.getName());
+        assertEquals("223344", result.getPhoneNumber());
+        assertEquals(MedicalCondition.MALFORMATION, result.getMedicalCondition());
     }
 
 
@@ -74,6 +80,9 @@ public class GuestsControllerRestTemplateIT {
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
                 }).getBody();
+
+     //   assertEquals( LocalDateTime.of(2021, 5,17, 10,30),
+      //          result.get(0).getStartTime());
     }
 
 

@@ -20,8 +20,8 @@ public class GuestDto {
 
     private MedicalCondition medicalCondition;
 
-    private Set<TimeBooker> timeBookers;
+    private Set<TimeBookerDto> timeBookers;
 
-    private Status status;
+  //  private Status status;
 
 }

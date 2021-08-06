@@ -19,6 +19,7 @@ public class CreateGuestCommand {
     private String name;
     @NotBlank(message = "phoneNumber can not be blank")
     private String phoneNumber;
+
     private MedicalCondition medicalCondition;
 
 }

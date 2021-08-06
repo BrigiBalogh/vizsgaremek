@@ -24,7 +24,7 @@ public class Guest {
     @Column(name = "guest_name")
     private String name;
 
-    @Column(name = "guest_phoneNumber")
+    @Column(name = "guest_phone_number")
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)

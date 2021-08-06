@@ -36,23 +36,23 @@ public class GuestController {
     }
 
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/timebookers")
     public GuestDto addTimeBookerToGuest(@PathVariable("id") long id,@Valid @RequestBody AddTimeBookerCommand command) {
         return guestService.addTimeBookerToGuest(id, command);
     }
 
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}/phonenumber")
     public GuestDto updatePhoneNumberById(@PathVariable("id") long id,@Valid @RequestBody UpdatePhoneNumberCommand command) {
         return guestService.updatePhoneNumberById(id, command);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}/medicalcondition")
     public GuestDto updateMedicalConditionById(@PathVariable("id") long id,@Valid @RequestBody UpdateMedicalConditionCommand command) {
         return guestService.updateMedicalConditionById(id, command);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteGuest(@PathVariable("id") long id) {
         guestService.deleteGuest(id);
     }

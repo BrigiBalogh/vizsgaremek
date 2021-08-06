@@ -14,5 +14,5 @@ public class TimeBookerDto {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Guest guest;
+  //  private Guest guest;
 }
