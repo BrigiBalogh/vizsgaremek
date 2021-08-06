@@ -30,7 +30,7 @@ public class GuestController {
 
     @PostMapping
     @Operation(summary = "Creates a guest", description = " New guest has been created.")
-    @ApiResponse(responseCode = "201", description = "Location is  found")
+    @ApiResponse(responseCode = "201", description = "Guest is  found")
     public GuestDto createGuest(@Valid @RequestBody CreateGuestCommand command) {
         return guestService.createGuest(command);
     }

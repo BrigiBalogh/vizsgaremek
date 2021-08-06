@@ -59,6 +59,17 @@ public class GuestService {
         return mapper.map(guest, GuestDto.class);
     }
 
+
+    @Transactional
+    public GuestDto updateStatusById(long id, UpdateStatusCommand command) {
+        Guest guest = guestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));
+        guest.setStatus(command.getStatus());
+
+        return mapper.map(guest, GuestDto.class);
+    }
+
+
     public void deleteGuest(long id) {
         guestRepository.deleteById(id);
     }
