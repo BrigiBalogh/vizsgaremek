@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Sql(statements = "delete from guests")
-@SpringBootTest(webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT )
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GuestsControllerRestTemplateIT {
 
 
@@ -30,14 +30,13 @@ public class GuestsControllerRestTemplateIT {
 
 
         template.postForObject("/api/guests", new CreateGuestCommand(
-                              "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
-                        GuestDto.class);
+                        "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
+                GuestDto.class);
 
 
-
-       template.postForObject("/api/guest", new CreateGuestCommand(
-                       "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
-               GuestDto.class);
+        template.postForObject("/api/guests", new CreateGuestCommand(
+                        "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
+                GuestDto.class);
 
         List<GuestDto> guests = template.exchange("/api/guests",
                 HttpMethod.GET,
@@ -54,12 +53,12 @@ public class GuestsControllerRestTemplateIT {
     @Test
     void testCreateGuest() {
         GuestDto result =
-        template.postForObject("/api/guests",
-                new CreateGuestCommand(
-                        "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
-                GuestDto.class);
+                template.postForObject("/api/guests",
+                        new CreateGuestCommand(
+                                "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
+                        GuestDto.class);
 
-        assertEquals("Frau Markgraf",result.getName());
+        assertEquals("Frau Markgraf", result.getName());
         assertEquals("223344", result.getPhoneNumber());
         assertEquals(MedicalCondition.MALFORMATION, result.getMedicalCondition());
     }
@@ -76,7 +75,7 @@ public class GuestsControllerRestTemplateIT {
 
 
         List<GuestDto> result = template.exchange(
-                "/api/guest/1/phonenumber",
+                "/api/guests/1/phonenumber",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
@@ -85,8 +84,6 @@ public class GuestsControllerRestTemplateIT {
         assertThat(result)
                 .extracting(GuestDto::getPhoneNumber)
                 .containsExactly("153344");
-
-
     }
 
 
@@ -101,7 +98,7 @@ public class GuestsControllerRestTemplateIT {
 
 
         List<GuestDto> result = template.exchange(
-                "/api/guest/1/medicalcondition",
+                "/api/guests/1/medicalcondition",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
@@ -117,12 +114,12 @@ public class GuestsControllerRestTemplateIT {
     @Test
     void testDeleteGuest() {
         GuestDto guestDto =
-                template.postForObject("/api/guest", new CreateGuestCommand(
+                template.postForObject("/api/guests", new CreateGuestCommand(
                                 "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
                         GuestDto.class);
-        template.delete("/api/guest/1 ");
+        template.delete("/api/guests/1 ");
 
-        List<GuestDto> result = template.exchange("/api/guest/1 ",
+        List<GuestDto> result = template.exchange("/api/guests/1 ",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
@@ -131,7 +128,7 @@ public class GuestsControllerRestTemplateIT {
         assertThat(result).
                 hasSize(0);
     }
-                                 
+
 }
 
 
