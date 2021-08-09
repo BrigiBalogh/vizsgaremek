@@ -24,7 +24,7 @@ public class TimeBooker {
     private LocalDateTime endTime;
 
 
-    @JoinColumn(name = "time_booker_guest")
+
     @ManyToOne(cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

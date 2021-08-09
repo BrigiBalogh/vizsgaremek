@@ -1,5 +1,6 @@
 package vizsgaremek.massage;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,16 +28,16 @@ public class GuestsControllerRestTemplateIT {
     @Test
     void testGetGuests() {
 
-        GuestDto guestDto =
-                template.postForObject("/api/guests", new CreateGuestCommand(
-                                "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
+
+        template.postForObject("/api/guests", new CreateGuestCommand(
+                              "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                         GuestDto.class);
 
-        assertEquals("Frau Markgraf", guestDto.getName());
 
-        template.postForObject("/api/guest", new CreateGuestCommand(
-                        "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
-                GuestDto.class);
+
+       template.postForObject("/api/guest", new CreateGuestCommand(
+                       "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
+               GuestDto.class);
 
         List<GuestDto> guests = template.exchange("/api/guests",
                 HttpMethod.GET,
@@ -71,18 +72,21 @@ public class GuestsControllerRestTemplateIT {
                         "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                 GuestDto.class);
 
-        template.put("/api/guests/1", new UpdatePhoneNumberCommand("153344"));
+        template.put("/api/guests/1/phonenumber", new UpdatePhoneNumberCommand("153344"));
 
 
         List<GuestDto> result = template.exchange(
-                "/api/guest",
+                "/api/guest/1/phonenumber",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
                 }).getBody();
 
-     //   assertEquals( LocalDateTime.of(2021, 5,17, 10,30),
-      //          result.get(0).getStartTime());
+        assertThat(result)
+                .extracting(GuestDto::getPhoneNumber)
+                .containsExactly("153344");
+
+
     }
 
 
@@ -93,15 +97,21 @@ public class GuestsControllerRestTemplateIT {
                         "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                 GuestDto.class);
 
-        template.put("/api/guests/1", new UpdateMedicalConditionCommand(MedicalCondition.CASUALTY));
+        template.put("/api/guests/1/medicalcondition", new UpdateMedicalConditionCommand(MedicalCondition.CASUALTY));
 
 
         List<GuestDto> result = template.exchange(
-                "/api/guest",
+                "/api/guest/1/medicalcondition",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
                 }).getBody();
+
+
+        assertThat(result)
+                .extracting(GuestDto::getMedicalCondition)
+                .containsExactly(MedicalCondition.CASUALTY);
+
     }
 
     @Test

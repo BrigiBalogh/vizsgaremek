@@ -5,10 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -31,7 +29,7 @@ public class Guest {
     @Column(name = "medical_condition")
     private MedicalCondition medicalCondition;
 
-    @Column(name = "time_bookers_of_guest")
+
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
     private Set<TimeBooker> timeBookers = new HashSet<>();
 
