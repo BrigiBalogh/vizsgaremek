@@ -65,13 +65,23 @@ public class GuestsControllerRestTemplateIT {
 
 
     @Test
-    void testUpdatePhoneNumberById() {
-        template.postForObject("/api/guests",
+    void testUpdatePhoneNumber() {
+        GuestDto guest = template.postForObject("/api/guests",
                 new CreateGuestCommand(
                         "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                 GuestDto.class);
 
-        template.put("/api/guests/1/phonenumber", new UpdatePhoneNumberCommand("153344"));
+        template.put("/api/guests/"+ guest.getId()+"/phonenumber", new UpdatePhoneNumberCommand("153344"));
+
+        GuestDto result = template.getForObject("/api/guests/" + guest.getId() + "/phonenumber", GuestDto.class);
+
+
+        assertEquals("153344", result.getPhoneNumber());
+    }
+       /*
+        GuestDto guest = template.postForObject(...);
+
+template.put("/api/guests/" + guest.getId() + "maradék", ...)
 
 
         List<GuestDto> result = template.exchange(
@@ -83,22 +93,41 @@ public class GuestsControllerRestTemplateIT {
 
         assertThat(result)
                 .extracting(GuestDto::getPhoneNumber)
-                .containsExactly("153344");
-    }
+                .containsExactly("153344");*/
+
+//    void testUpdateInstrumentPrice(){
+//
+//        template.postForObject("/api/instruments",
+//                new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, 2000),
+//                InstrumentDTO.class);
+//
+//
+//        template.put("/api/instruments/1", new UpdatePriceCommand(1000));
+//
+//        InstrumentDTO result = template.getForObject("/api/instruments/1",InstrumentDTO.class);
+//
+//        assertEquals(1000,result.getPrice());
+//
+//    }
+
 
 
     @Test
     void testUpdateMedicalConditionById() {
-        template.postForObject("/api/guests",
+        GuestDto guest = template.postForObject("/api/guests",
                 new CreateGuestCommand(
                         "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                 GuestDto.class);
 
-        template.put("/api/guests/1/medicalcondition", new UpdateMedicalConditionCommand(MedicalCondition.CASUALTY));
+        template.put("/api/guests/"+ guest.getId() + "/medicalcondition", new UpdateMedicalConditionCommand(MedicalCondition.CASUALTY));
 
+        GuestDto result = template.getForObject("/api/guests/" + guest.getId() + "/medicalcondition",GuestDto.class);
 
+        assertEquals(MedicalCondition.CASUALTY,result.getMedicalCondition());
+
+/*
         List<GuestDto> result = template.exchange(
-                "/api/guests/1/medicalcondition",
+                "/api/guests/" + guest.getId() + "/medicalcondition",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {
@@ -107,19 +136,19 @@ public class GuestsControllerRestTemplateIT {
 
         assertThat(result)
                 .extracting(GuestDto::getMedicalCondition)
-                .containsExactly(MedicalCondition.CASUALTY);
+                .containsExactly(MedicalCondition.CASUALTY);*/
 
     }
 
     @Test
     void testDeleteGuest() {
-        GuestDto guestDto =
+        GuestDto guest =
                 template.postForObject("/api/guests", new CreateGuestCommand(
                                 "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
                         GuestDto.class);
-        template.delete("/api/guests/1 ");
+        template.delete("/api/guests/" + guest.getId());
 
-        List<GuestDto> result = template.exchange("/api/guests/1 ",
+        List<GuestDto> result = template.exchange("/api/guests/"+ guest.getId(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {

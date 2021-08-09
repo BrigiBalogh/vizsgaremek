@@ -14,6 +14,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class GuestDto {
 
+
+    private Long id;
+
     private String name;
 
     private String phoneNumber;
