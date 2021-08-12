@@ -26,12 +26,12 @@ public class TimeBookerController {
     }
 
 
-    @PostMapping
+  /*  @PostMapping
     @Operation(summary = "Creates a timeBooker", description = " New timeBooker has been created.")
     @ApiResponse(responseCode = "201", description = "TimeBooker is  found")
     public TimeBookerDto createTimeBooker(@Valid @RequestBody CreateTimeBookerCommand command) {
         return timeBookerService.createTimeBooker(command);
-    }
+    }*/
 
 
     @PostMapping("/{id}")

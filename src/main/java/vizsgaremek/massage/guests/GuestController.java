@@ -33,39 +33,26 @@ public class GuestController {
         return guestService.findGuestById(id);
     }
 
-    @GetMapping("/{id}/phonenumber")
-    public GuestDto findGuestByIdWithPhoneNumber(@PathVariable("id") long id) {
-        return guestService.findGuestByIdWithPhoneNumber(id);
-    }
-
-    @GetMapping("/{id}/medicalcondition")
-    public GuestDto findGuestByIdWithMedicalcondition(@PathVariable("id") long id) {
-        return guestService.findGuestByIdWithMedicalcondition(id);
-    }
 
     @PostMapping
     @Operation(summary = "Creates a guest", description = " New guest has been created.")
-    @ApiResponse(responseCode = "201", description = "Guest is  found")
+    @ApiResponse(responseCode = "201", description = "Guest is  create")
     public GuestDto createGuest(@Valid @RequestBody CreateGuestCommand command) {
         return guestService.createGuest(command);
     }
 
 
     @PostMapping("/{id}/timebookers")
-    public GuestDto addTimeBookerToGuest(@PathVariable("id") long id,@Valid @RequestBody AddTimeBookerCommand command) {
+    public GuestDto addTimeBookerToGuest(@PathVariable("id") long id, @Valid @RequestBody AddTimeBookerCommand command) {
         return guestService.addTimeBookerToGuest(id, command);
     }
 
 
-    @PutMapping("/{id}/phonenumber")
-    public GuestDto updatePhoneNumberById(@PathVariable("id") long id,@Valid @RequestBody UpdatePhoneNumberCommand command) {
-        return guestService.updatePhoneNumberById(id, command);
+    @PutMapping("/{id}")
+    public GuestDto updateGuestById(@PathVariable("id") long id, @Valid @RequestBody UpdateGuestCommand command) {
+        return guestService.updateGuestById(id, command);
     }
 
-    @PutMapping("/{id}/medicalcondition")
-    public GuestDto updateMedicalConditionById(@PathVariable("id") long id,@Valid @RequestBody UpdateMedicalConditionCommand command) {
-        return guestService.updateMedicalConditionById(id, command);
-    }
 
     @DeleteMapping("/{id}")
     public void deleteGuest(@PathVariable("id") long id) {

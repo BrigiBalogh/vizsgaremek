@@ -24,6 +24,10 @@ public class TimeBooker {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -31,10 +35,17 @@ public class TimeBooker {
     @ToString.Exclude
     private Guest guest;
 
-    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime, Guest guest) {
+    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime, Status status, Guest guest) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.status = status;
         this.guest = guest;
+    }
+
+    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime, Status status) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
     }
 
     public TimeBooker(LocalDateTime startTime) {

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vizsgaremek.massage.guests.UpdateStatusCommand;
 import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
 import vizsgaremek.massage.timeBookers.TimeBooker;
 import vizsgaremek.massage.timeBookers.TimeBookerDto;
@@ -29,12 +28,12 @@ public class TimeBookerService {
     }
 
 
-    public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
+   /* public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
                 command.getGuest());
         timeBookerRepository.save(timeBooker);
         return mapper.map(timeBooker, TimeBookerDto.class);
-    }
+    }*/
 
 
     @Transactional

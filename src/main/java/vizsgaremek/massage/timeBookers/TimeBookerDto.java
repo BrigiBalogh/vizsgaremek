@@ -3,6 +3,7 @@ package vizsgaremek.massage.timeBookers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vizsgaremek.massage.guests.Guest;
 
 import java.time.LocalDateTime;
 
@@ -11,8 +12,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TimeBookerDto {
 
+    private Long id;
 
     private LocalDateTime startTime;
+
     private LocalDateTime endTime;
-  //  private Guest guest;
+
+    private Status status;
+
+    private Guest guest;
+
 }

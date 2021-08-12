@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateStatusCommand {
+public class UpdateGuestCommand {
 
-    private Status status;
 
+    private String phoneNumber;
+
+    private MedicalCondition medicalCondition;
 
 
 }

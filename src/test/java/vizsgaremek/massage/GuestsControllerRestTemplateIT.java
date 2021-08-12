@@ -54,7 +54,7 @@ public class GuestsControllerRestTemplateIT {
         GuestDto result =
                 template.postForObject("/api/guests",
                         new CreateGuestCommand(
-                                "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
+                                "Frau Markgraf", "223344", MedicalCondition.MALFORMATION ),
                         GuestDto.class);
 
         assertEquals("Frau Markgraf", result.getName());
@@ -64,38 +64,21 @@ public class GuestsControllerRestTemplateIT {
 
 
     @Test
-    void testUpdatePhoneNumber() {
+    void testUpdateGuest() {
         GuestDto guest = template.postForObject("/api/guests",
                 new CreateGuestCommand(
                         "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                 GuestDto.class);
 
-        template.put("/api/guests/"+ guest.getId()+"/phonenumber", new UpdatePhoneNumberCommand("153344"));
+        template.put("/api/guests/" + guest.getId(),
+                new UpdateGuestCommand("153344", MedicalCondition.MALFORMATION));
 
-        GuestDto result = template.getForObject("/api/guests/" + guest.getId() + "/phonenumber", GuestDto.class);
+        GuestDto result = template.getForObject("/api/guests/" + guest.getId(), GuestDto.class);
 
 
         assertEquals("153344", result.getPhoneNumber());
     }
 
-
-
-
-
-    @Test
-    void testUpdateMedicalConditionById() {
-        GuestDto guest = template.postForObject("/api/guests",
-                new CreateGuestCommand(
-                        "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
-                GuestDto.class);
-
-        template.put("/api/guests/"+ guest.getId() + "/medicalcondition", new UpdateMedicalConditionCommand(MedicalCondition.CASUALTY));
-
-        GuestDto result = template.getForObject("/api/guests/" + guest.getId() + "/medicalcondition",GuestDto.class);
-
-        assertEquals(MedicalCondition.CASUALTY,result.getMedicalCondition());
-
-    }
 
     @Test
     void testDeleteGuest() {

@@ -22,7 +22,4 @@ public class GuestDto {
     private MedicalCondition medicalCondition;
 
     private Set<TimeBookerDto> timeBookers;
-
-  //  private Status status;
-
 }

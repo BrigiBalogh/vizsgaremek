@@ -28,6 +28,13 @@ public class GuestService {
                 .toList();
     }
 
+
+    public GuestDto findGuestById(long id) {
+        Guest guest = findGuest(id);
+
+        return mapper.map(guest, GuestDto.class);
+    }
+
     public GuestDto createGuest(CreateGuestCommand command) {
         Guest guest = new Guest(command.getName(), command.getPhoneNumber(),
                 command.getMedicalCondition());
@@ -37,9 +44,7 @@ public class GuestService {
 
     @Transactional
     public GuestDto addTimeBookerToGuest(long id, AddTimeBookerCommand command) {
-        Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
-        ;
+        Guest guest = findGuest(id);
 
         TimeBooker timeBooker = timeBookerRepository.findById(command.getTimeBookerId())
                 .orElseThrow(() -> new NotFoundException(command.getTimeBookerId()));
@@ -49,39 +54,16 @@ public class GuestService {
         return mapper.map(guest, GuestDto.class);
     }
 
-
-
-
-
-
-
     @Transactional
-    public GuestDto updatePhoneNumberById(long id, UpdatePhoneNumberCommand command) {
+    public GuestDto updateGuestById(long id, UpdateGuestCommand command) {
 
-        Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));
+        Guest guest = findGuest(id);
+
         guest.setPhoneNumber(command.getPhoneNumber());
-
-        return mapper.map(guest, GuestDto.class);
-    }
-
-    @Transactional
-    public GuestDto updateMedicalConditionById(long id, UpdateMedicalConditionCommand command) {
-        Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));
         guest.setMedicalCondition(command.getMedicalCondition());
 
         return mapper.map(guest, GuestDto.class);
-    }
 
-
-    @Transactional
-    public GuestDto updateStatusById(long id, UpdateStatusCommand command) {
-        Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cannot found guest"));
-        guest.setStatus(command.getStatus());
-
-        return mapper.map(guest, GuestDto.class);
     }
 
 
@@ -90,28 +72,10 @@ public class GuestService {
     }
 
 
-    public GuestDto findGuestById(long id) {
-
-        Optional<Guest> guest = guestRepository.findById(id);
-        if (guest.isEmpty())
-            return null;
-        else
-            return mapper.map(guest.get(), GuestDto.class);
-    }
-
-    public GuestDto findGuestByIdWithPhoneNumber(long id) {
-
-        Guest guest = guestRepository.findById(id)
+    private Guest findGuest(long id) {
+         return guestRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
-        return mapper.map(guest, GuestDto.class);
     }
 
 
-
-    public GuestDto findGuestByIdWithMedicalcondition(long id) {
-
-        Guest guest = guestRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
-        return mapper.map(guest, GuestDto.class);
-    }
 }

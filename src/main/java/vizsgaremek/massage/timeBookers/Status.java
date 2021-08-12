@@ -1,4 +1,4 @@
-package vizsgaremek.massage.guests;
+package vizsgaremek.massage.timeBookers;
 
 public enum Status {
 

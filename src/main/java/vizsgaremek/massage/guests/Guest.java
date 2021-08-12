@@ -33,17 +33,13 @@ public class Guest {
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
     private Set<TimeBooker> timeBookers;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
 
-
-    public Guest(String name, String phoneNumber, MedicalCondition medicalCondition, Set<TimeBooker> timeBookers, Status status) {
+    public Guest(String name, String phoneNumber, MedicalCondition medicalCondition, Set<TimeBooker> timeBookers) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.medicalCondition = medicalCondition;
         this.timeBookers = timeBookers;
-        this.status = status;
+
     }
 
     public Guest(String name, String phoneNumber, MedicalCondition medicalCondition) {
@@ -52,18 +48,17 @@ public class Guest {
         this.medicalCondition = medicalCondition;
     }
 
-    public Guest(String name, String phoneNumber, MedicalCondition medicalCondition, Set<TimeBooker> timeBookers) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.medicalCondition = medicalCondition;
-        this.timeBookers = timeBookers;
-    }
 
     public void addTimeBooker(TimeBooker timeBooker) {
-        if(timeBookers == null) {
+        if (timeBookers == null) {
             timeBookers = new HashSet<>();
         }
         timeBookers.add(timeBooker);
         timeBooker.setGuest(this);
+    }
+
+    public Guest(String phoneNumber, MedicalCondition medicalCondition) {
+        this.phoneNumber = phoneNumber;
+        this.medicalCondition = medicalCondition;
     }
 }
