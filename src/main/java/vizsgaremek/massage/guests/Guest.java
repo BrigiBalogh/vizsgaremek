@@ -1,11 +1,11 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.guests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vizsgaremek.massage.timeBookers.TimeBooker;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Data
@@ -31,7 +31,7 @@ public class Guest {
 
 
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
-    private Set<TimeBooker> timeBookers = new HashSet<>();
+    private Set<TimeBooker> timeBookers;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

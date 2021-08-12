@@ -1,4 +1,4 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.timeBookers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateTimeBookerCommand {
+public  class UpdateTimeBookerCommand {
 
     private LocalDateTime startTime;
+
+
 }

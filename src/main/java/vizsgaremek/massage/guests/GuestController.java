@@ -1,4 +1,4 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.guests;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +27,21 @@ public class GuestController {
         return guestService.getGuests();
     }
 
+
+    @GetMapping("/{id}")
+    public GuestDto findGuestById(@PathVariable("id") long id) {
+        return guestService.findGuestById(id);
+    }
+
+    @GetMapping("/{id}/phonenumber")
+    public GuestDto findGuestByIdWithPhoneNumber(@PathVariable("id") long id) {
+        return guestService.findGuestByIdWithPhoneNumber(id);
+    }
+
+    @GetMapping("/{id}/medicalcondition")
+    public GuestDto findGuestByIdWithMedicalcondition(@PathVariable("id") long id) {
+        return guestService.findGuestByIdWithMedicalcondition(id);
+    }
 
     @PostMapping
     @Operation(summary = "Creates a guest", description = " New guest has been created.")

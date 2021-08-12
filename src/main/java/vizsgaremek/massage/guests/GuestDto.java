@@ -1,12 +1,10 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.guests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vizsgaremek.massage.timeBookers.TimeBookerDto;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.Set;
 
 @Data

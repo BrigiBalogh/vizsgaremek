@@ -1,6 +1,7 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.timeBookers;
 
 import lombok.*;
+import vizsgaremek.massage.guests.Guest;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

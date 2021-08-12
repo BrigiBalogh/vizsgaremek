@@ -1,9 +1,14 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.timeBookers;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vizsgaremek.massage.guests.UpdateStatusCommand;
+import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
+import vizsgaremek.massage.timeBookers.TimeBooker;
+import vizsgaremek.massage.timeBookers.TimeBookerDto;
+import vizsgaremek.massage.timeBookers.TimeBookerRepository;
 
 import java.util.List;
 

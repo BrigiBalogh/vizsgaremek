@@ -7,6 +7,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
+import vizsgaremek.massage.guests.Guest;
+import vizsgaremek.massage.guests.MedicalCondition;
+import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
+import vizsgaremek.massage.timeBookers.TimeBookerDto;
 
 
 import java.time.LocalDateTime;

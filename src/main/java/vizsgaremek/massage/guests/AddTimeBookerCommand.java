@@ -1,13 +1,16 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.guests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateStatusCommand {
+public class AddTimeBookerCommand {
 
-    private Status status;
+
+    private long timeBookerId;
 }

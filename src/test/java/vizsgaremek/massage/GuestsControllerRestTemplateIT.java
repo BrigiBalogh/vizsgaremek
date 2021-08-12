@@ -1,6 +1,5 @@
 package vizsgaremek.massage;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,9 +7,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
+import vizsgaremek.massage.guests.*;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,37 +77,8 @@ public class GuestsControllerRestTemplateIT {
 
         assertEquals("153344", result.getPhoneNumber());
     }
-       /*
-        GuestDto guest = template.postForObject(...);
-
-template.put("/api/guests/" + guest.getId() + "maradék", ...)
 
 
-        List<GuestDto> result = template.exchange(
-                "/api/guests/1/phonenumber",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<GuestDto>>() {
-                }).getBody();
-
-        assertThat(result)
-                .extracting(GuestDto::getPhoneNumber)
-                .containsExactly("153344");*/
-
-//    void testUpdateInstrumentPrice(){
-//
-//        template.postForObject("/api/instruments",
-//                new CreateInstrumentCommand("Fender", InstrumentType.ELECTRIC_GUITAR, 2000),
-//                InstrumentDTO.class);
-//
-//
-//        template.put("/api/instruments/1", new UpdatePriceCommand(1000));
-//
-//        InstrumentDTO result = template.getForObject("/api/instruments/1",InstrumentDTO.class);
-//
-//        assertEquals(1000,result.getPrice());
-//
-//    }
 
 
 
@@ -125,19 +95,6 @@ template.put("/api/guests/" + guest.getId() + "maradék", ...)
 
         assertEquals(MedicalCondition.CASUALTY,result.getMedicalCondition());
 
-/*
-        List<GuestDto> result = template.exchange(
-                "/api/guests/" + guest.getId() + "/medicalcondition",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<GuestDto>>() {
-                }).getBody();
-
-
-        assertThat(result)
-                .extracting(GuestDto::getMedicalCondition)
-                .containsExactly(MedicalCondition.CASUALTY);*/
-
     }
 
     @Test
@@ -146,9 +103,9 @@ template.put("/api/guests/" + guest.getId() + "maradék", ...)
                 template.postForObject("/api/guests", new CreateGuestCommand(
                                 "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
                         GuestDto.class);
-        template.delete("/api/guests/" + guest.getId());
+        template.delete("/api/guests/{id}", guest.getId());
 
-        List<GuestDto> result = template.exchange("/api/guests/"+ guest.getId(),
+        List<GuestDto> result = template.exchange("/api/guests",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GuestDto>>() {

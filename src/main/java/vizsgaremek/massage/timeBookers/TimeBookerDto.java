@@ -1,4 +1,4 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.timeBookers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

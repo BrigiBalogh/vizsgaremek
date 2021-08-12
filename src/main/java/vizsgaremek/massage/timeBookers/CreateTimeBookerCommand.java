@@ -1,9 +1,10 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.timeBookers;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vizsgaremek.massage.guests.Guest;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;

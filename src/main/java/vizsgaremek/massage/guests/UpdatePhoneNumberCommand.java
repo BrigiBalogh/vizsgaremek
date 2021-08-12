@@ -1,4 +1,4 @@
-package vizsgaremek.massage;
+package vizsgaremek.massage.guests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
