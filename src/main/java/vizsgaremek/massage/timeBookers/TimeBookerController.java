@@ -40,7 +40,7 @@ public class TimeBookerController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteTimeBooker(@PathVariable("id") long id) {
         timeBookerService.deleteTimeBooker(id);
     }

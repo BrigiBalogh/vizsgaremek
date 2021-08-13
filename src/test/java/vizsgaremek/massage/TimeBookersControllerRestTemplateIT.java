@@ -140,9 +140,9 @@ public class TimeBookersControllerRestTemplateIT {
                                 LocalDateTime.of(2021,5,17, 11,30),
                                 Status.NOT_PAID, guest2.getId()), TimeBookerDto.class);
 
-        template.delete("/api/time-bookers/1 ");
+        template.delete("/api/time-bookers/{id}", timeBookerDto.getId());
 
-        List<TimeBookerDto> result = template.exchange("/api/time-bookers/1 ",
+        List<TimeBookerDto> result = template.exchange("/api/time-bookers",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<TimeBookerDto>>() {

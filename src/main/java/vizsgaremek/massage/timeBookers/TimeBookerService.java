@@ -41,8 +41,9 @@ public class TimeBookerService {
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
                 command.getStatus());
         Guest guest = guestRepository.findById(command.getGuestId()).orElseThrow(()->new NotFoundException(command.getGuestId()));
+        guest.addTimeBooker(timeBooker);
         timeBookerRepository.save(timeBooker);
-        return mapper.map(timeBooker, TimeBookerDto.class);
+        return mapper.map(timeBooker,  TimeBookerDto.class);
     }
 
 

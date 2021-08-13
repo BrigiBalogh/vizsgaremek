@@ -46,8 +46,8 @@ public class GuestService {
     public GuestDto addTimeBookerToGuest(long id, AddTimeBookerCommand command) {
         Guest guest = findGuest(id);
 
-        TimeBooker timeBooker = timeBookerRepository.findById(command.getTimeBookerId())
-                .orElseThrow(() -> new NotFoundException(command.getTimeBookerId()));
+        TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
+                command.getStatus());
 
         guest.addTimeBooker(timeBooker);
 
