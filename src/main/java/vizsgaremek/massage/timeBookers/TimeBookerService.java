@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vizsgaremek.massage.NotFoundException;
+import vizsgaremek.massage.guests.Guest;
+import vizsgaremek.massage.guests.GuestRepository;
 
 
 import java.util.List;
@@ -17,6 +19,8 @@ public class TimeBookerService {
     private ModelMapper mapper;
 
     private TimeBookerRepository timeBookerRepository;
+
+    private GuestRepository guestRepository;
 
 
     public List<TimeBookerDto> getTimeBookers() {
@@ -36,6 +40,7 @@ public class TimeBookerService {
     public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
                 command.getStatus());
+        Guest guest = guestRepository.findById(command.getGuestId()).orElseThrow(()->new NotFoundException(command.getGuestId()));
         timeBookerRepository.save(timeBooker);
         return mapper.map(timeBooker, TimeBookerDto.class);
     }
