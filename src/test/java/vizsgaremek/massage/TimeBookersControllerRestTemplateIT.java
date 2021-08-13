@@ -1,5 +1,5 @@
 package vizsgaremek.massage;
-/*
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +10,7 @@ import org.springframework.test.context.jdbc.Sql;
 import vizsgaremek.massage.guests.Guest;
 import vizsgaremek.massage.guests.MedicalCondition;
 import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
+import vizsgaremek.massage.timeBookers.Status;
 import vizsgaremek.massage.timeBookers.TimeBookerDto;
 
 
@@ -19,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Sql(statements = "delete from time_bookers")
+@Sql(statements = {"delete from time_bookers","delete from guests"})
 @SpringBootTest(webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT )
 public class TimeBookersControllerRestTemplateIT {
 
@@ -34,15 +35,17 @@ public class TimeBookersControllerRestTemplateIT {
         TimeBookerDto timeBookerDto =
                 template.postForObject("/api/time-bookers", new CreateTimeBookerCommand(
                                 LocalDateTime.of(2021, 5, 15, 10, 30),
-                                LocalDateTime.of(2021, 5, 15, 11, 30)
+                                LocalDateTime.of(2021, 5, 15, 11, 30),
+                                Status.PAID
                                 , new Guest("Frau Markgraf", "223344", MedicalCondition.MALFORMATION)),
                         TimeBookerDto.class);
 
-     //   assertEquals("Frau Markgraf", timeBookerDto.getGuest().getName());
+        assertEquals("Frau Markgraf", timeBookerDto.getGuest().getName());
 
         template.postForObject("/api/time-bookers", new CreateTimeBookerCommand(
                         LocalDateTime.of(2021, 5, 17, 10, 30),
-                        LocalDateTime.of(2021, 5, 17, 11, 30)
+                        LocalDateTime.of(2021, 5, 17, 11, 30),
+                        Status.NOT_PAID
                         , new Guest("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
                 TimeBookerDto.class);
 
@@ -67,13 +70,14 @@ public class TimeBookersControllerRestTemplateIT {
             template.postForObject("/api/time-bookers",
                     new CreateTimeBookerCommand(
                             LocalDateTime.of(2021, 5,17, 10,30),
-                            LocalDateTime.of(2021,5,17, 11,30)
+                            LocalDateTime.of(2021,5,17, 11,30),
+                            Status.NOT_PAID
                             ,new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
                     TimeBookerDto.class);
 
             assertEquals( LocalDateTime.of(2021, 5,17, 10,30),result.getStartTime());
             assertEquals(LocalDateTime.of(2021,5,17, 11,30), result.getEndTime());
-         //   assertEquals(new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM), result.getGuest());
+            assertEquals(new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM), result.getGuest());
         }
 
 
@@ -84,7 +88,8 @@ public class TimeBookersControllerRestTemplateIT {
                     template.postForObject("/api/time-bookers",
                             new CreateTimeBookerCommand(
                                     LocalDateTime.of(2021, 5,17, 10,30),
-                                    LocalDateTime.of(2021,5,17, 11,30)
+                                    LocalDateTime.of(2021,5,17, 11,30),
+                                    Status.NOT_PAID
                                     ,new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
                             TimeBookerDto.class);
 
@@ -107,7 +112,8 @@ public class TimeBookersControllerRestTemplateIT {
                 template.postForObject("/api/time-bookers",
                         new CreateTimeBookerCommand(
                                 LocalDateTime.of(2021, 5,17, 10,30),
-                                LocalDateTime.of(2021,5,17, 11,30)
+                                LocalDateTime.of(2021,5,17, 11,30),
+                                Status.NOT_PAID
                                 ,new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
                         TimeBookerDto.class);
         template.delete("/api/time-bookers/1 ");
@@ -121,6 +127,4 @@ public class TimeBookersControllerRestTemplateIT {
         assertThat(result).
                 hasSize(0);
     }
-
-
-}*/
+}

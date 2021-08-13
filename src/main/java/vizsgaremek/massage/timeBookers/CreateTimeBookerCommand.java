@@ -21,10 +21,9 @@ public class CreateTimeBookerCommand {
     @NotBlank(message = "End time can not be blank")
     private LocalDateTime endTime;
 
+    @NotBlank(message = "Status can not be blank")
+    private Status status;
 
     @NotBlank(message = "Name can not be blank")
     private Guest guest;
-
-    @NotBlank(message = "Status can not be blank")
-    private Status status;
 }

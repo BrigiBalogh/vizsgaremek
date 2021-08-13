@@ -34,7 +34,6 @@ public class Guest {
     private Set<TimeBooker> timeBookers;
 
 
-
     public Guest(String name, String phoneNumber, MedicalCondition medicalCondition) {
         this.name = name;
         this.phoneNumber = phoneNumber;

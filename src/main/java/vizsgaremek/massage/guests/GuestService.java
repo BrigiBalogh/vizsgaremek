@@ -9,7 +9,7 @@ import vizsgaremek.massage.timeBookers.TimeBooker;
 import vizsgaremek.massage.timeBookers.TimeBookerRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -73,7 +73,7 @@ public class GuestService {
 
 
     private Guest findGuest(long id) {
-         return guestRepository.findById(id)
+        return guestRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
     }
 

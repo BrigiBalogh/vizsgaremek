@@ -26,15 +26,15 @@ public class TimeBookerController {
     }
 
 
-  /*  @PostMapping
+    @PostMapping
     @Operation(summary = "Creates a timeBooker", description = " New timeBooker has been created.")
-    @ApiResponse(responseCode = "201", description = "TimeBooker is  found")
+    @ApiResponse(responseCode = "201", description = "TimeBooker is  create")
     public TimeBookerDto createTimeBooker(@Valid @RequestBody CreateTimeBookerCommand command) {
         return timeBookerService.createTimeBooker(command);
-    }*/
+    }
 
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public TimeBookerDto updateTimeBookerById(@PathVariable("id") long id, @Valid @RequestBody UpdateTimeBookerCommand command) {
         return timeBookerService.updateTimeBookerById(id, command);
     }

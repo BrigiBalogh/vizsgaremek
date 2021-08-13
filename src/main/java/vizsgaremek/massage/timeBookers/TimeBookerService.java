@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
-import vizsgaremek.massage.timeBookers.TimeBooker;
-import vizsgaremek.massage.timeBookers.TimeBookerDto;
-import vizsgaremek.massage.timeBookers.TimeBookerRepository;
+import vizsgaremek.massage.NotFoundException;
+
 
 import java.util.List;
 
@@ -28,19 +26,28 @@ public class TimeBookerService {
     }
 
 
-   /* public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
+    public TimeBookerDto findTimeBookerById(long id) {
+        TimeBooker timeBooker = findTimeBookerBy(id);
+
+        return mapper.map(timeBooker, TimeBookerDto.class);
+    }
+
+
+    public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
-                command.getGuest());
+                command.getStatus(), command.getGuest());
         timeBookerRepository.save(timeBooker);
         return mapper.map(timeBooker, TimeBookerDto.class);
-    }*/
+    }
 
 
     @Transactional
     public TimeBookerDto updateTimeBookerById(long id, UpdateTimeBookerCommand command) {
-        TimeBooker timeBooker = timeBookerRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cannot found time booker"));
+        TimeBooker timeBooker = findTimeBookerBy(id);
+
         timeBooker.setStartTime(command.getStartTime());
+        timeBooker.setEndTime(command.getEndTime());
+        timeBooker.setStatus(command.getStatus());
 
         return mapper.map(timeBooker, TimeBookerDto.class);
     }
@@ -48,5 +55,12 @@ public class TimeBookerService {
 
     public void deleteTimeBooker(long id) {
         timeBookerRepository.deleteById(id);
+    }
+
+
+    private TimeBooker findTimeBookerBy(long id) {
+
+        return timeBookerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id));
     }
 }

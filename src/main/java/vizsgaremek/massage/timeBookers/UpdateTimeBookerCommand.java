@@ -19,6 +19,4 @@ public  class UpdateTimeBookerCommand {
     private LocalDateTime endTime;
 
     private Status status;
-
-
 }

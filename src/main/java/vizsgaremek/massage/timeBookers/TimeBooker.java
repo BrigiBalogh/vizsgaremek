@@ -28,12 +28,12 @@ public class TimeBooker {
     @Column(name = "status")
     private Status status;
 
-
-
     @ManyToOne(cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Guest guest;
+
+
 
     public TimeBooker(LocalDateTime startTime, LocalDateTime endTime, Status status, Guest guest) {
         this.startTime = startTime;
@@ -48,7 +48,4 @@ public class TimeBooker {
         this.status = status;
     }
 
-    public TimeBooker(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
 }

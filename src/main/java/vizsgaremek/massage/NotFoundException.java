@@ -1,6 +1,5 @@
 package vizsgaremek.massage;
 
-import org.zalando.problem.Status;
 import org.zalando.problem.AbstractThrowableProblem;
 
 import java.net.URI;

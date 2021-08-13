@@ -21,5 +21,4 @@ public class CreateGuestCommand {
     private MedicalCondition medicalCondition;
 
 
-
 }
