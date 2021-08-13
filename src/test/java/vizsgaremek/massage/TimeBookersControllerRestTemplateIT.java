@@ -7,7 +7,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
+import vizsgaremek.massage.guests.CreateGuestCommand;
 import vizsgaremek.massage.guests.Guest;
+import vizsgaremek.massage.guests.GuestDto;
 import vizsgaremek.massage.guests.MedicalCondition;
 import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
 import vizsgaremek.massage.timeBookers.Status;
@@ -32,22 +34,29 @@ public class TimeBookersControllerRestTemplateIT {
     @Test
     void testGetTimeBookers() {
 
+        GuestDto guest =   template.postForObject("/api/guests", new CreateGuestCommand(
+                        "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
+                GuestDto.class);
+
+
+        GuestDto guest2 = template.postForObject("/api/guests", new CreateGuestCommand(
+                                "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
+                        GuestDto.class);
+
+
         TimeBookerDto timeBookerDto =
                 template.postForObject("/api/time-bookers", new CreateTimeBookerCommand(
                                 LocalDateTime.of(2021, 5, 15, 10, 30),
                                 LocalDateTime.of(2021, 5, 15, 11, 30),
-                                Status.PAID
-                                , new Guest("Frau Markgraf", "223344", MedicalCondition.MALFORMATION)),
-                        TimeBookerDto.class);
+                                Status.PAID, guest.getId()), TimeBookerDto.class);
 
-        assertEquals("Frau Markgraf", timeBookerDto.getGuest().getName());
+        assertEquals(LocalDateTime.of(2021, 5, 15, 10, 30), timeBookerDto.getStartTime());
 
         template.postForObject("/api/time-bookers", new CreateTimeBookerCommand(
                         LocalDateTime.of(2021, 5, 17, 10, 30),
                         LocalDateTime.of(2021, 5, 17, 11, 30),
-                        Status.NOT_PAID
-                        , new Guest("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
-                TimeBookerDto.class);
+                        Status.NOT_PAID, guest2.getId()), TimeBookerDto.class);
+
 
         List<TimeBookerDto> timeBookers = template.exchange("/api/time-bookers",
                 HttpMethod.GET,
@@ -64,34 +73,45 @@ public class TimeBookersControllerRestTemplateIT {
 
 
 
+
+
         @Test
         void testCreateTimeBooker() {
+
+            GuestDto guest2 = template.postForObject("/api/guests", new CreateGuestCommand(
+                            "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
+                    GuestDto.class);
+
             TimeBookerDto result =
             template.postForObject("/api/time-bookers",
                     new CreateTimeBookerCommand(
                             LocalDateTime.of(2021, 5,17, 10,30),
                             LocalDateTime.of(2021,5,17, 11,30),
-                            Status.NOT_PAID
-                            ,new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
-                    TimeBookerDto.class);
+                            Status.NOT_PAID, guest2.getId()), TimeBookerDto.class);
+
 
             assertEquals( LocalDateTime.of(2021, 5,17, 10,30),result.getStartTime());
             assertEquals(LocalDateTime.of(2021,5,17, 11,30), result.getEndTime());
-            assertEquals(new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM), result.getGuest());
+
         }
 
 
 
         @Test
         void testUpdateStartTimeById() {
+
+            GuestDto guest2 = template.postForObject("/api/guests", new CreateGuestCommand(
+                            "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
+                    GuestDto.class);
+
+
             TimeBookerDto timeBookerDto =
                     template.postForObject("/api/time-bookers",
                             new CreateTimeBookerCommand(
                                     LocalDateTime.of(2021, 5,17, 10,30),
                                     LocalDateTime.of(2021,5,17, 11,30),
-                                    Status.NOT_PAID
-                                    ,new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
-                            TimeBookerDto.class);
+                                    Status.NOT_PAID, guest2.getId()), TimeBookerDto.class);
+
 
             List<TimeBookerDto> result = template.exchange(
                     "/api/time-bookers",
@@ -108,14 +128,18 @@ public class TimeBookersControllerRestTemplateIT {
 
     @Test
     void testDeleteTimeBooker() {
+
+        GuestDto guest2 = template.postForObject("/api/guests", new CreateGuestCommand(
+                        "Herr Zipfer", "123651", MedicalCondition.SPINAL_PROBLEM),
+                GuestDto.class);
+
         TimeBookerDto timeBookerDto =
                 template.postForObject("/api/time-bookers",
                         new CreateTimeBookerCommand(
                                 LocalDateTime.of(2021, 5,17, 10,30),
                                 LocalDateTime.of(2021,5,17, 11,30),
-                                Status.NOT_PAID
-                                ,new Guest ("Herr zipfer", "153344", MedicalCondition.SPINAL_PROBLEM)),
-                        TimeBookerDto.class);
+                                Status.NOT_PAID, guest2.getId()), TimeBookerDto.class);
+
         template.delete("/api/time-bookers/1 ");
 
         List<TimeBookerDto> result = template.exchange("/api/time-bookers/1 ",

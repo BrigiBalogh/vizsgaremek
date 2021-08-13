@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vizsgaremek.massage.guests.Guest;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,15 +15,15 @@ import java.time.LocalDateTime;
 public class CreateTimeBookerCommand {
 
     @Schema(description = "Time of the massage")
-    @NotBlank(message = "Start time can not be blank")
+    @NotNull(message = "Start time can not be null")
     private LocalDateTime startTime;
 
-    @NotBlank(message = "End time can not be blank")
+    @NotNull(message = "End time can not be null")
     private LocalDateTime endTime;
 
-    @NotBlank(message = "Status can not be blank")
+    @NotNull(message = "Status can not be null")
     private Status status;
 
-    @NotBlank(message = "Name can not be blank")
-    private Guest guest;
+    @NotNull(message = "Name can not be null")
+    private Long guestId;
 }

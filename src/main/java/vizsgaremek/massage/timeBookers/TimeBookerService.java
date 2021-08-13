@@ -35,7 +35,7 @@ public class TimeBookerService {
 
     public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
-                command.getStatus(), command.getGuest());
+                command.getStatus());
         timeBookerRepository.save(timeBooker);
         return mapper.map(timeBooker, TimeBookerDto.class);
     }

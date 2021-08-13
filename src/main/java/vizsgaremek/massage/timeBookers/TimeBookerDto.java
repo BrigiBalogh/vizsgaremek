@@ -20,6 +20,4 @@ public class TimeBookerDto {
 
     private Status status;
 
-    private Guest guest;
-
 }

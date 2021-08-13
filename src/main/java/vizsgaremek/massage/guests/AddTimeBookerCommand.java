@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class AddTimeBookerCommand {
 
 
-    private long timeBookerId;
+    private Long timeBookerId;
 }
