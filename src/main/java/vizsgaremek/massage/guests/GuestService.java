@@ -49,6 +49,8 @@ public class GuestService {
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
                 command.getStatus());
 
+        if (timeBooker.)
+
         guest.addTimeBooker(timeBooker);
 
         return mapper.map(guest, GuestDto.class);
