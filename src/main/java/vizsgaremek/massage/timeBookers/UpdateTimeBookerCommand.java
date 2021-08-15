@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public  class UpdateTimeBookerCommand {
+public class UpdateTimeBookerCommand {
 
     @NotNull(message = "startTime cannot be blank")
     private LocalDateTime startTime;

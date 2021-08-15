@@ -2,10 +2,12 @@ package vizsgaremek.massage.timeBookers;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vizsgaremek.massage.NotFoundException;
 import vizsgaremek.massage.guests.Guest;
+import vizsgaremek.massage.guests.GuestDto;
 import vizsgaremek.massage.guests.GuestRepository;
 
 
@@ -23,33 +25,32 @@ public class TimeBookerService {
     private GuestRepository guestRepository;
 
 
-    public List<TimeBookerDto> getTimeBookers() {
-        return timeBookerRepository.findAll().stream()
-                .map(t -> mapper.map(t, TimeBookerDto.class))
-                .toList();
+    public List<TimeBookerDto> getTimeBookers(Long id) {
+        java.lang.reflect.Type targetListType = new TypeToken<List<TimeBookerDto>>() {
+        }.getType();
+        return mapper.map(timeBookerRepository.findAllByGuest_Id(id), targetListType);
     }
 
 
-    public TimeBookerDto findTimeBookerById(long id) {
-        TimeBooker timeBooker = findTimeBookerBy(id);
-
+    public TimeBookerDto findTimeBookerById(long id, long timeBookerId) {
+        TimeBooker timeBooker = findTimeBookerByIdAndGuestId(id, timeBookerId);
         return mapper.map(timeBooker, TimeBookerDto.class);
     }
 
 
-    public TimeBookerDto createTimeBooker(CreateTimeBookerCommand command) {
+    public TimeBookerDto createTimeBooker(long id, CreateTimeBookerCommand command) {
+
+        Guest guest = guestRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
-                command.getStatus());
-        Guest guest = guestRepository.findById(command.getGuestId()).orElseThrow(()->new NotFoundException(command.getGuestId()));
-        guest.addTimeBooker(timeBooker);
+                command.getStatus(), guest);
         timeBookerRepository.save(timeBooker);
-        return mapper.map(timeBooker,  TimeBookerDto.class);
+        return mapper.map(timeBooker, TimeBookerDto.class);
     }
 
 
     @Transactional
-    public TimeBookerDto updateTimeBookerById(long id, UpdateTimeBookerCommand command) {
-        TimeBooker timeBooker = findTimeBookerBy(id);
+    public TimeBookerDto updateTimeBookerById(long id, long timeBookerId, UpdateTimeBookerCommand command) {
+        TimeBooker timeBooker = findTimeBookerByIdAndGuestId(timeBookerId, id);
 
         timeBooker.setStartTime(command.getStartTime());
         timeBooker.setEndTime(command.getEndTime());
@@ -59,14 +60,14 @@ public class TimeBookerService {
     }
 
 
-    public void deleteTimeBooker(long id) {
-        timeBookerRepository.deleteById(id);
+    public void deleteTimeBooker(long id, long timeBookerId) {
+        timeBookerRepository.delete(findTimeBookerByIdAndGuestId(id, timeBookerId));
     }
 
 
-    private TimeBooker findTimeBookerBy(long id) {
+    private TimeBooker findTimeBookerByIdAndGuestId(long id, long timeBookerId) {
 
-        return timeBookerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
+        return timeBookerRepository.findByIdAndGuest_Id(timeBookerId, id)
+                .orElseThrow(() -> new IllegalArgumentException());
     }
 }

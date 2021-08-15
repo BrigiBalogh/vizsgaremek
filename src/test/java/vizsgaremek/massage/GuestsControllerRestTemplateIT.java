@@ -54,7 +54,7 @@ public class GuestsControllerRestTemplateIT {
         GuestDto result =
                 template.postForObject("/api/guests",
                         new CreateGuestCommand(
-                                "Frau Markgraf", "223344", MedicalCondition.MALFORMATION ),
+                                "Frau Markgraf", "223344", MedicalCondition.MALFORMATION),
                         GuestDto.class);
 
         assertEquals("Frau Markgraf", result.getName());

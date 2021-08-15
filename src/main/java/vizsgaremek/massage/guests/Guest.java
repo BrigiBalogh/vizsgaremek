@@ -30,7 +30,7 @@ public class Guest {
     private MedicalCondition medicalCondition;
 
 
-    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TimeBooker> timeBookers;
 
 

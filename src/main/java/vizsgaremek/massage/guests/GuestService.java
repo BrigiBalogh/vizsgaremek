@@ -2,6 +2,7 @@ package vizsgaremek.massage.guests;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vizsgaremek.massage.NotFoundException;
@@ -23,9 +24,11 @@ public class GuestService {
     private TimeBookerRepository timeBookerRepository;
 
     public List<GuestDto> getGuests() {
-        return guestRepository.findAll().stream()
-                .map(g -> mapper.map(g, GuestDto.class))
-                .toList();
+
+
+        java.lang.reflect.Type targetListType = new TypeToken<List<GuestDto>>() {
+        }.getType();
+        return mapper.map(guestRepository.findAll(), targetListType);
     }
 
 
@@ -42,19 +45,6 @@ public class GuestService {
         return mapper.map(guest, GuestDto.class);
     }
 
-    @Transactional
-    public GuestDto addTimeBookerToGuest(long id, AddTimeBookerCommand command) {
-        Guest guest = findGuest(id);
-
-        TimeBooker timeBooker = new TimeBooker(command.getStartTime(), command.getEndTime(),
-                command.getStatus());
-
-        if (timeBooker.)
-
-        guest.addTimeBooker(timeBooker);
-
-        return mapper.map(guest, GuestDto.class);
-    }
 
     @Transactional
     public GuestDto updateGuestById(long id, UpdateGuestCommand command) {

@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/time-bookers")
+@RequestMapping("/api/guests/{id}/time-bookers")
 @Tag(name = "Operations on timeBooker")
 public class TimeBookerController {
 
@@ -21,28 +21,39 @@ public class TimeBookerController {
     }
 
     @GetMapping
-    public List<TimeBookerDto> getTimeBookers() {
-        return timeBookerService.getTimeBookers();
+    public List<TimeBookerDto> getTimeBookers(@PathVariable Long id) {
+        return timeBookerService.getTimeBookers(id);
+    }
+
+    @GetMapping("/{timebookId}")
+    public TimeBookerDto getTimeBooker(
+            @PathVariable Long id,
+            @PathVariable Long timeBookId
+    ) {
+        return timeBookerService.findTimeBookerById(id, timeBookId);
     }
 
 
     @PostMapping
     @Operation(summary = "Creates a timeBooker", description = " New timeBooker has been created.")
     @ApiResponse(responseCode = "201", description = "TimeBooker is  create")
-    public TimeBookerDto createTimeBooker(@Valid @RequestBody CreateTimeBookerCommand command) {
-        return timeBookerService.createTimeBooker(command);
+    public TimeBookerDto createTimeBooker(@PathVariable Long id, @Valid @RequestBody CreateTimeBookerCommand command) {
+        return timeBookerService.createTimeBooker(id, command);
     }
 
 
-    @PutMapping("/{id}")
-    public TimeBookerDto updateTimeBookerById(@PathVariable("id") long id, @Valid @RequestBody UpdateTimeBookerCommand command) {
-        return timeBookerService.updateTimeBookerById(id, command);
+    @PutMapping("/{timebookId}")
+    public TimeBookerDto updateTimeBookerById(
+            @PathVariable("id") long id,
+            @PathVariable Long timeBookId,
+            @Valid @RequestBody UpdateTimeBookerCommand command) {
+        return timeBookerService.updateTimeBookerById(id, timeBookId, command);
     }
 
 
-    @DeleteMapping("/{id}")
-    public void deleteTimeBooker(@PathVariable("id") long id) {
-        timeBookerService.deleteTimeBooker(id);
+    @DeleteMapping("/{timebookId}")
+    public void deleteTimeBooker(@PathVariable("id") long id, @PathVariable Long timeBookId) {
+        timeBookerService.deleteTimeBooker(id, timeBookId);
     }
 }
 
