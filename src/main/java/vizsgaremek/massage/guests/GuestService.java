@@ -23,9 +23,8 @@ public class GuestService {
 
     private TimeBookerRepository timeBookerRepository;
 
+
     public List<GuestDto> getGuests() {
-
-
         java.lang.reflect.Type targetListType = new TypeToken<List<GuestDto>>() {
         }.getType();
         return mapper.map(guestRepository.findAll(), targetListType);

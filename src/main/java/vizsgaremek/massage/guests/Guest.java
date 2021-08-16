@@ -40,17 +40,4 @@ public class Guest {
         this.medicalCondition = medicalCondition;
     }
 
-
-    public void addTimeBooker(TimeBooker timeBooker) {
-        if (timeBookers == null) {
-            timeBookers = new HashSet<>();
-        }
-        timeBookers.add(timeBooker);
-        timeBooker.setGuest(this);
-    }
-
-    public Guest(String phoneNumber, MedicalCondition medicalCondition) {
-        this.phoneNumber = phoneNumber;
-        this.medicalCondition = medicalCondition;
-    }
 }

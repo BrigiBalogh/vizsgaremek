@@ -41,11 +41,4 @@ public class TimeBooker {
         this.status = status;
         this.guest = guest;
     }
-
-    public TimeBooker(LocalDateTime startTime, LocalDateTime endTime, Status status) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = status;
-    }
-
 }

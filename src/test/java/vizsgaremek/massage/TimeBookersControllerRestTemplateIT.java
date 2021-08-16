@@ -17,8 +17,6 @@ import vizsgaremek.massage.timeBookers.CreateTimeBookerCommand;
 import vizsgaremek.massage.timeBookers.Status;
 import vizsgaremek.massage.timeBookers.TimeBookerDto;
 import vizsgaremek.massage.timeBookers.UpdateTimeBookerCommand;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
 
 
 import java.time.LocalDateTime;
@@ -74,6 +72,8 @@ public class TimeBookersControllerRestTemplateIT {
                         TimeBookerDto.class, params);
 
         assertEquals(LocalDateTime.of(2021, 5, 15, 10, 30), timeBookerDto.getStartTime());
+
+
         params.put("id", guest2.getId().toString());
         template.postForObject(URL_TIMEBOOKER, new CreateTimeBookerCommand(
                 LocalDateTime.of(2021, 5, 17, 10, 30),
@@ -190,6 +190,6 @@ public class TimeBookersControllerRestTemplateIT {
                                 LocalDateTime.of(2021, 5, 17, 11, 0),
                                 Status.NOT_PAID), Problem.class, params);
 
-        assertEquals(Status.BAD_REQUEST, problem.getStatus());
+       assertEquals( org.zalando.problem.Status.BAD_REQUEST, problem.getStatus());
     }
 }

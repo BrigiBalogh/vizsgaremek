@@ -42,11 +42,6 @@ public class GuestController {
     }
 
 
-    @PostMapping("/{id}/timebookers")
-    public GuestDto addTimeBookerToGuest(@PathVariable("id") long id, @Valid @RequestBody AddTimeBookerCommand command) {
-        return guestService.addTimeBookerToGuest(id, command);
-    }
-
 
     @PutMapping("/{id}")
     public GuestDto updateGuestById(@PathVariable("id") long id, @Valid @RequestBody UpdateGuestCommand command) {

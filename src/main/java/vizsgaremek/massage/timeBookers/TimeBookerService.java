@@ -67,7 +67,7 @@ public class TimeBookerService {
 
     private TimeBooker findTimeBookerByIdAndGuestId(long id, long timeBookerId) {
 
-        return timeBookerRepository.findByIdAndGuest_Id(timeBookerId, id)
-                .orElseThrow(() -> new IllegalArgumentException());
+        return timeBookerRepository.findByIdAndGuest_Id(id, timeBookerId)
+                .orElseThrow(() -> new IllegalArgumentException("Not found id"));
     }
 }
