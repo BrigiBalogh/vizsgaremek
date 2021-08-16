@@ -54,7 +54,6 @@ public class GuestsControllerRestTemplateIT {
     void testGetGuests() {
 
         params.put("id", guest.getId().toString());
-        params.put("id", guest2.getId().toString());
         List<GuestDto> guests = template.exchange(
                 URL_GUEST,
                 HttpMethod.GET,

@@ -40,7 +40,7 @@ public class TimeBookersControllerRestTemplateIT {
 
     static String URL_GUEST = "/api/guests";
     static String URL_TIMEBOOKER = "/api/guests/{id}/time-bookers";
-    static String URL_TIMEBOOKER_ID = "/api/guests/{id}/time-bookers/{timebookId}";
+    static String URL_TIMEBOOKER_ID = "/api/guests/{id}/time-bookers/{timebookerId}";
 
     static Map<String, String> params = new HashMap<>();
 
@@ -126,7 +126,7 @@ public class TimeBookersControllerRestTemplateIT {
                                 LocalDateTime.of(2021, 5, 17, 11, 30),
                                 Status.NOT_PAID), TimeBookerDto.class, params);
 
-        params.put("timebookId", timeBookerDto.getId().toString());
+        params.put("timebookerId", timeBookerDto.getId().toString());
         TimeBookerDto result = template.exchange(
                 URL_TIMEBOOKER_ID,
                 HttpMethod.PUT,
@@ -155,7 +155,7 @@ public class TimeBookersControllerRestTemplateIT {
                                 Status.PAID),
                         TimeBookerDto.class, params);
 
-        params.put("timebookId", timeBookerDto.getId().toString());
+        params.put("timebookerId", timeBookerDto.getId().toString());
 
         template.delete(URL_TIMEBOOKER_ID, params);
 
