@@ -3,6 +3,7 @@ package vizsgaremek.massage.timeBookers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,10 +26,10 @@ public class TimeBookerController {
         return timeBookerService.getTimeBookers(id);
     }
 
-    @GetMapping("/{timebookId}")
+    @GetMapping("/{timebookerId}")
     public TimeBookerDto getTimeBooker(
             @PathVariable Long id,
-            @PathVariable Long timeBookId
+            @PathVariable("timebookerId") Long timeBookId
     ) {
         return timeBookerService.findTimeBookerById(id, timeBookId);
     }
@@ -42,17 +43,17 @@ public class TimeBookerController {
     }
 
 
-    @PutMapping("/{timebookId}")
+    @PutMapping("/{timebookerId}")
     public TimeBookerDto updateTimeBookerById(
             @PathVariable("id") long id,
-            @PathVariable Long timeBookId,
+            @PathVariable("timebookerId")Long timeBookId,
             @Valid @RequestBody UpdateTimeBookerCommand command) {
         return timeBookerService.updateTimeBookerById(id, timeBookId, command);
     }
 
 
-    @DeleteMapping("/{timebookId}")
-    public void deleteTimeBooker(@PathVariable("id") long id, @PathVariable Long timeBookId) {
+    @DeleteMapping("/{timebookerId}")
+    public void deleteTimeBooker(@PathVariable("id") long id, @PathVariable("timebookerId") Long timeBookId) {
         timeBookerService.deleteTimeBooker(id, timeBookId);
     }
 }
