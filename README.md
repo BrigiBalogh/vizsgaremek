@@ -1,6 +1,15 @@
 #Massage
-#Időpontfoglaló alkalmazás
+##Időpontfoglaló alkalmazás
 
-massage szolgáltatásra lehet bejelentkezni , 
-de igazából más szolgáltatásra is alkalmas lehet
-ez a program.
+###Leírás
+
+Massage szolgáltatásra lehet bejelentkezni ,
+új vendéget felvenni, a meglévő időponton módosítani
+törölni.
+
+
+###Használata
+
+####Guest
+
+

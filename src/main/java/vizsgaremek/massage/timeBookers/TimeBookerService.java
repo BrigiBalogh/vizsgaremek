@@ -50,7 +50,7 @@ public class TimeBookerService {
 
     @Transactional
     public TimeBookerDto updateTimeBookerById(long id, long timeBookerId, UpdateTimeBookerCommand command) {
-        TimeBooker timeBooker = findTimeBookerByIdAndGuestId(timeBookerId, id);
+        TimeBooker timeBooker = findTimeBookerByIdAndGuestId(id,timeBookerId);
 
         timeBooker.setStartTime(command.getStartTime());
         timeBooker.setEndTime(command.getEndTime());
@@ -67,7 +67,7 @@ public class TimeBookerService {
 
     private TimeBooker findTimeBookerByIdAndGuestId(long id, long timeBookerId) {
 
-        return timeBookerRepository.findByIdAndGuest_Id(id, timeBookerId)
-                .orElseThrow(() -> new IllegalArgumentException("Not found id"));
+        return timeBookerRepository.findByIdAndGuest_Id( timeBookerId, id)
+                .orElseThrow(() -> new NotFoundGuestIdAndTimeBookerIdException(id, timeBookerId) );
     }
 }
